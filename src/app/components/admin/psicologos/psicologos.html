@@ -41,14 +41,12 @@
       <div class="card-row">
         <p>Liberado Admin: {{ p.liberado_admin ? 'Sim' : 'Não' }}</p>
 
-        <button (click)="toggleLiberadoAdmin(p); $event.stopPropagation()"
+        <button (click)="abrimomodalLiberacao(p); $event.stopPropagation()"
           [ngClass]="p.liberado_admin ? 'btn-desativar' : 'btn-ativar'">
           {{ p.liberado_admin ? 'Bloquear' : 'Liberar' }}
         </button>
 
-        <button (click)="abrirWhatsApp(p.whatsapp); $event.stopPropagation()" class='btn-ativar'>
-          Chamar no whatsApp
-        </button>
+
       </div>
       <div class="card-row">
         <p>Ativo: {{ isAtivo(p) ? ' Sim' : 'Não' }}</p>
@@ -60,6 +58,9 @@
 
       <p class="assinatura" *ngIf="!p.assinaturas?.length">Sem assinatura</p>
 
+      <button (click)="abrirWhatsApp(p.whatsapp); $event.stopPropagation()" class='btn-ativar'>
+        Chamar no whatsApp
+      </button>
       <button class="button-ver-mais" (click)="abrirModal(p)">Ver detalhes</button>
     </div>
   </div>
@@ -105,7 +106,7 @@
 
 
       <div class="info-item" *ngIf="psicologoSelecionado.assinaturas?.length">
-        <strong>Assinaturas:</strong>
+        <strong>Assinaturas ({{psicologoSelecionado.assinaturas?.length}}):</strong>
         <div *ngFor="let a of psicologoSelecionado.assinaturas" class="badge">
           {{ a.status }}
           <ng-container *ngIf="a.data_expiracao">
@@ -181,7 +182,7 @@
 
     <div class="modal-footer">
       <button (click)="fecharConfirmToggle()" class="btn-cancel">Cancelar</button>
-      <button (click)="confirmarToggle()" class="btn-confirm">Confirmar</button>
+      <button (click)="toggleLiberadoAdmin(confirmTogglePsicologo.psicologo)" class="btn-confirm">Confirmar</button>
     </div>
   </div>
 </div>

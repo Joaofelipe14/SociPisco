@@ -2,8 +2,9 @@ import { Component, OnInit, ChangeDetectorRef, NgZone } from '@angular/core';
 import { SupabaseService } from '../../../services/supabase';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { gerarSlug } from '../../../utils/slug';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-psicologos',
@@ -23,10 +24,17 @@ export class AdminPsicologos implements OnInit {
   constructor(
     private supabaseService: SupabaseService,
     private cdr: ChangeDetectorRef,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private router: Router
   ) { }
 
   ngOnInit() {
+
+    const token = localStorage.getItem('supa_access_token');
+    if (!token) {
+      alert('Acesso restrito a administradores.');
+      this.router.navigate(['admin/login']);
+    }
     this.loadPsicologos();
   }
 
@@ -91,43 +99,32 @@ export class AdminPsicologos implements OnInit {
     this.confirmTogglePsicologo = null;
   }
 
-  async confirmarToggle() {
-    if (!this.confirmTogglePsicologo) return;
-    const { psicologo, novoStatus, notificar } = this.confirmTogglePsicologo;
 
-    try {
-      await this.supabaseService.toggleAtivoPsicologo(psicologo.id, novoStatus);
-      this.ngZone.run(() => { psicologo.liberado_admin = novoStatus; this.cdr.markForCheck(); });
-      if (notificar) this.notificarCliente(psicologo, novoStatus);
-    } catch (error) { console.error('Erro ao alterar status:', error); }
-
-    this.fecharConfirmToggle();
-  }
 
   modalLoading = false;
 
-  abrirWhatsApp(whatsapp: string) {
+  abrirWhatsApp(whatsapp: string, msg = 'Olá, sou da  Socipsi') {
     if (whatsapp) {
       const numero = whatsapp.replace(/\D/g, '');
-      const texto = encodeURIComponent('Olá, sou da  Socipsi');
+      const texto = encodeURIComponent(msg);
       const url = `https://wa.me/${numero}?text=${texto}`;
       window.open(url, '_blank');
     }
   }
 
+  abrimomodalLiberacao(p: any) {
+    this.confirmTogglePsicologo = { psicologo: p, novoStatus: !p.liberado_admin, notificar: true };
+  }
 
   async toggleLiberadoAdmin(p: any) {
     const novo = !p.liberado_admin;
 
     const resp = await this.supabaseService.toggleAtivoPsicologo(p.id, novo);
-
-    console.log(resp)
     if (resp[0].id != p.id) {
       alert('ID DIVERGENTE PARANDO AQUI')
       return;
     }
 
-    // Atualiza no objeto (modal)
     p.liberado_admin = novo;
 
     // Atualiza também na lista principal
@@ -136,20 +133,40 @@ export class AdminPsicologos implements OnInit {
       this.psicologos[index].liberado_admin = novo;
     }
 
+    if (this.confirmTogglePsicologo?.notificar) {
+      this.notificarCliente(p, novo);
+    }
     this.cdr.markForCheck();
+
+    this.confirmTogglePsicologo = null;
+  }
+  notificarCliente(psicologo: any, novoStatus: boolean) {
+
+    const slug = this.getSlug(psicologo);
+    let mensagem = `Olá ${psicologo.nome}!
+    Seu cadastro foi aprovado no SociPsi.
+    Acesse o site e finalize sua assinatura para começar a divulgar seus atendimentos e atrair novos pacientes.
+    Estamos prontos para impulsionar sua agenda! 🚀
+    https://socipsi.com.br/piscologo/${slug}`;
+
+
+    // let mensagem = `Olá ${psicologo.nome}! ⏰
+    // Sua assinatura do SociPsi está chegando ao fim.
+    // Entre no site e renove sua assinatura para continuar aumentando sua visibilidade e mantendo sua agenda sempre cheia.
+    // https://socipsi.com.br/${slug}`;
+
+
+    if (!novoStatus) {
+      mensagem = `Olá ${psicologo.nome}, seu acesso foi bloqueado pela nossa equipe. Por favor, entre em contato conosco para mais informações.`;
+    };
+
+
+    this.abrirWhatsApp(psicologo.whatsapp || '', mensagem);
   }
 
-  notificarCliente(psicologo: any, ativo: boolean) {
-    const mensagem = `Olá ${psicologo.nome}, seu status foi alterado para ${ativo ? 'Ativo' : 'Inativo'}.`;
-    console.log('Enviar notificação via WhatsApp/Email:', mensagem);
-    this.abrirWhatsApp(psicologo.whatsapp || '');
-  }
 
   isAtivo(p: any): boolean {
-    if (p.crp == '12/312312') {
-      console.log(p)
 
-    }
     return p.liberado_admin && p.assinaturas?.some((a: { status: string; data_expiracao: string | number | Date; }) =>
       a.status === 'ativo' && new Date(a.data_expiracao) > this.today
     );

@@ -663,14 +663,16 @@ export class MeusDadosComponent implements OnInit {
               return dateA - dateB;
             });
 
-            // 2 – Gera numeração correta
+          
+            // 3 – Inverte apenas a ordem visual
+            cobrancasOrdenadas.reverse();
+
+              // 2 – Gera numeração correta
             cobrancasOrdenadas.forEach((c, index) => {
               if (!c.installmentNumber) c.installmentNumber = index + 1;
               c.totalInstallments = cobrancasOrdenadas.length;
             });
 
-            // 3 – Inverte apenas a ordem visual
-            cobrancasOrdenadas.reverse();
 
             item.cobrancas = cobrancasOrdenadas;
 

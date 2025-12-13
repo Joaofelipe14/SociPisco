@@ -154,7 +154,7 @@
 
           </div>
 
-          <div *ngIf="!podeMostrarPlanos(assinaturas)" class="plans-header">
+          <div *ngIf="!podeMostrarPlanos(assinaturas) && user?.liberado_admin == 1" class="plans-header">
             <h2>Minhas Assinaturas</h2>
             <p class="assinaturas-subtitle">Gerencie seus planos e pagamentos</p>
           </div>

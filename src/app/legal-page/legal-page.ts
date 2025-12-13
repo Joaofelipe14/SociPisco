@@ -268,7 +268,6 @@ Dúvidas sobre pagamento: socipsi1@gmail.com
    ✓ Enviar informações sobre localização do consultório
 
 5.2. PROIBIDO:
-   ✗ Realizar atendimento psicológico pela plataforma
    ✗ Compartilhar dados pessoais de outros pacientes
    ✗ Solicitar pagamento antecipado sem consulta agendada
    ✗ Fazer propaganda agressiva ou enganosa

@@ -499,7 +499,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 100%;
+  max-width: 350px;
 }
 
 .psicologo-card.card-mode .extra-info-badge {

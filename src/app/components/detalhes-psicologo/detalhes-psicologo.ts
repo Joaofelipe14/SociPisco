@@ -21,7 +21,7 @@ export class DetalhesPsicologoComponent implements OnInit {
   faWhatsapp = faWhatsapp; // ⚠️ deve ser propriedade da classe
   shareSuccess = false;
   resumoExpandido = false;
-  readonly RESUMO_LIMITE_CARACTERES = 300;
+  readonly RESUMO_LIMITE_CARACTERES = 500;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,7 +32,7 @@ export class DetalhesPsicologoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    window.scroll(0,0)
+    window.scroll(0, 0)
     this.loading = true;
     this.cdr.markForCheck();
 
@@ -111,53 +111,55 @@ export class DetalhesPsicologoComponent implements OnInit {
 
   getRedesSociais(): string[] {
     const redes = this.psicologo?.redes_sociais;
+
     if (Array.isArray(redes)) {
-      return redes;
+      return redes.filter(r => r && r.trim() !== '');
     }
+
     return [];
   }
 
   identificarRedeSocial(url: string): string {
     if (!url) return 'website';
-    
+
     const urlLower = url.toLowerCase();
-    
+
     // Normalizar URL (adicionar https:// se não tiver protocolo)
     let normalizedUrl = urlLower;
     if (!normalizedUrl.startsWith('http://') && !normalizedUrl.startsWith('https://')) {
       normalizedUrl = 'https://' + normalizedUrl;
     }
-    
+
     // Instagram
     if (normalizedUrl.includes('instagram.com') || urlLower.includes('instagram')) {
       return 'instagram';
     }
-    
+
     // Facebook
     if (normalizedUrl.includes('facebook.com') || urlLower.includes('facebook')) {
       return 'facebook';
     }
-    
+
     // LinkedIn
     if (normalizedUrl.includes('linkedin.com') || urlLower.includes('linkedin')) {
       return 'linkedin';
     }
-    
+
     // Twitter/X
     if (normalizedUrl.includes('twitter.com') || normalizedUrl.includes('x.com') || urlLower.includes('twitter') || urlLower.includes('x.com')) {
       return 'twitter';
     }
-    
+
     // YouTube
     if (normalizedUrl.includes('youtube.com') || normalizedUrl.includes('youtu.be') || urlLower.includes('youtube')) {
       return 'youtube';
     }
-    
+
     // TikTok
     if (normalizedUrl.includes('tiktok.com') || urlLower.includes('tiktok')) {
       return 'tiktok';
     }
-    
+
     // Site pessoal (padrão)
     return 'website';
   }
