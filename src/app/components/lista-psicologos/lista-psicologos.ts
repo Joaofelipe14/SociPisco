@@ -9,6 +9,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { ALL_ABORDAGENS, ALL_AREAS, ALL_PUBLICOS } from '../constants';
 import { gerarSlug } from '../../utils/slug';
+declare var gtag: Function;
+
 @Component({
   selector: 'app-lista-psicologos',
   standalone: true,
@@ -54,11 +56,18 @@ export class ListaPsicologos implements OnInit {
   }
 
   ngOnInit() {
+    gtag('event', 'visualizar_lista_psicologos');
+
     this.psicologos$ = from(this.supabaseService.buscarPsicologos());
     this.aplicarFiltros();
   }
 
   aplicarFiltros() {
+    gtag('event', 'aplicar_filtro_psicologo', {
+      areas: this.selectedAreas.join(','),
+      abordagens: this.selectedAbordagens.join(','),
+      publicos: this.selectedPublicos.join(',')
+    });
     this.psicologosFiltrados$ = this.psicologos$.pipe(
       map(psicologos => {
         let filtrados = psicologos;
@@ -105,6 +114,9 @@ export class ListaPsicologos implements OnInit {
   }
 
   onSearchChange() {
+    gtag('event', 'buscar_psicologo', {
+      termo_busca: this.searchTerm
+    });
     this.aplicarFiltros();
   }
 

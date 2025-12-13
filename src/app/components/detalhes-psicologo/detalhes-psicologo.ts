@@ -6,6 +6,7 @@ import { SupabaseService } from '../../services/supabase';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { gerarSlug } from '../../utils/slug';
+declare var gtag: Function;
 
 @Component({
   selector: 'app-detalhes-psicologo',
@@ -22,6 +23,7 @@ export class DetalhesPsicologoComponent implements OnInit {
   shareSuccess = false;
   resumoExpandido = false;
   readonly RESUMO_LIMITE_CARACTERES = 500;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -45,6 +47,12 @@ export class DetalhesPsicologoComponent implements OnInit {
             this.psicologo = psicologo || null;
             this.loading = false;
             if (!psicologo) this.error = true;
+            if (psicologo) {
+              gtag('event', 'view_psicologo', {
+                psicologo_nome: psicologo.nome,
+                psicologo_slug: slug
+              });
+            }
             this.cdr.markForCheck();
           });
         })
