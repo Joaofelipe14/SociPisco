@@ -26,15 +26,15 @@ export class ListaPsicologos implements OnInit {
   allAreas = ALL_AREAS;
   allAbordagens = ALL_ABORDAGENS;
   allPublicos = ALL_PUBLICOS;
-  
+
   selectedAreas: string[] = [];
   selectedAbordagens: string[] = [];
   selectedPublicos: string[] = [];
-  
+
   searchAreas = '';
   searchAbordagens = '';
   searchPublicos = '';
-  
+
   showAreasDropdown = false;
   showAbordagensDropdown = false;
   showPublicosDropdown = false;
@@ -118,7 +118,9 @@ export class ListaPsicologos implements OnInit {
 
   abrirWhatsApp(whatsapp: string) {
     if (whatsapp) {
-      const url = whatsapp.startsWith('http') ? whatsapp : `https://wa.me/${whatsapp.replace(/\D/g, '')}`;
+      const numero = whatsapp.replace(/\D/g, '');
+      const texto = encodeURIComponent('Olá, vim pela Socipsi e queria verificar disponibilidade de agendamento de horário.');
+      const url = `https://wa.me/${numero}?text=${texto}`;
       window.open(url, '_blank');
     }
   }
@@ -249,7 +251,7 @@ export class ListaPsicologos implements OnInit {
 
   openDropdown(dropdown: 'areas' | 'abordagens' | 'publicos'): void {
     this.closeAllDropdowns();
-    
+
     if (dropdown === 'areas') {
       this.showAreasDropdown = true;
     } else if (dropdown === 'abordagens') {

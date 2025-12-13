@@ -106,6 +106,15 @@ export class AdminPsicologos implements OnInit {
 
   modalLoading = false;
 
+  abrirWhatsApp(whatsapp: string) {
+    if (whatsapp) {
+      const numero = whatsapp.replace(/\D/g, '');
+      const texto = encodeURIComponent('Olá, sou da  Socipsi');
+      const url = `https://wa.me/${numero}?text=${texto}`;
+      window.open(url, '_blank');
+    }
+  }
+
 
   async toggleLiberadoAdmin(p: any) {
     const novo = !p.liberado_admin;
@@ -133,6 +142,7 @@ export class AdminPsicologos implements OnInit {
   notificarCliente(psicologo: any, ativo: boolean) {
     const mensagem = `Olá ${psicologo.nome}, seu status foi alterado para ${ativo ? 'Ativo' : 'Inativo'}.`;
     console.log('Enviar notificação via WhatsApp/Email:', mensagem);
+    this.abrirWhatsApp(psicologo.whatsapp || '');
   }
 
   isAtivo(p: any): boolean {
@@ -148,7 +158,7 @@ export class AdminPsicologos implements OnInit {
   diasTeste: number = 7;
   motivoTeste: string = '';
 
-  async   liberarPeriodoGratis(p: any) {
+  async liberarPeriodoGratis(p: any) {
     if (!this.diasTeste || this.diasTeste < 1) return;
 
     const resp = await this.supabaseService.criarAssinaturaTeste(

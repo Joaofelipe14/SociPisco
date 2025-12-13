@@ -46,9 +46,12 @@
           {{ p.liberado_admin ? 'Bloquear' : 'Liberar' }}
         </button>
 
+        <button (click)="abrirWhatsApp(p.whatsapp); $event.stopPropagation()" class='btn-ativar'>
+          Chamar no whatsApp
+        </button>
       </div>
       <div class="card-row">
-        <p>Ativo: {{ isAtivo(p) ? 'Sim' : 'Não' }}</p>
+        <p>Ativo: {{ isAtivo(p) ? ' Sim' : 'Não' }}</p>
         <p class="assinatura" *ngIf="p.assinaturas?.length && p.assinaturas[0].data_expiracao">
           {{ p.assinaturas[0].status }} — expira {{ p.assinaturas[0].data_expiracao | date:'dd/MM/yyyy' }}
         </p>
@@ -114,7 +117,7 @@
       <div class="info-item" *ngIf="isAtivo(psicologoSelecionado)">
         <strong>pagina pessoal:</strong>
         <a [href]="'/psicologo/' + getSlug(psicologoSelecionado)" target="_blank" rel="noopener noreferrer">
-        clique aqui
+          clique aqui
         </a>
       </div>
 
