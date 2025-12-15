@@ -70,9 +70,9 @@ export class DetalhesPsicologoComponent implements OnInit {
   abrirWhatsApp() {
     if (this.psicologo?.whatsapp) {
       const whatsapp = this.psicologo.whatsapp;
-      const url = whatsapp.startsWith('http')
-        ? whatsapp
-        : `https://wa.me/${whatsapp.replace(/\D/g, '')}`;
+      const numero = whatsapp.replace(/\D/g, '');
+      const texto = encodeURIComponent('Olá, vim pela Socipsi e queria verificar disponibilidade de agendamento de horário.');
+      const url = `https://wa.me/${numero}?text=${texto}`;
       window.open(url, '_blank');
     }
   }
