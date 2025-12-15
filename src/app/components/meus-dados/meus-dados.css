@@ -747,6 +747,9 @@ textarea {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.3px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .info-value {
@@ -858,6 +861,7 @@ textarea {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -899,9 +903,12 @@ textarea {
 }
 
 @keyframes pulseIcon {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.05);
   }
@@ -1763,6 +1770,12 @@ textarea {
   background: linear-gradient(135deg, #f59e0b, #d97706);
 }
 
+.cobranca-item.estornado {
+  border-color:  rgb(185, 185, 185);
+}
+
+
+
 .cobranca-item.vencido {
   border-color: rgba(239, 68, 68, 0.2);
 }
@@ -1815,6 +1828,13 @@ textarea {
   color: #d97706;
 }
 
+.cobranca-status-badge.estornado {
+  background:  rgb(185, 185, 185);;
+}
+
+.cobranca-status-badge.estornado i {
+  color: rgb(185, 185, 185);
+}
 .cobranca-status-badge.vencido {
   background: #fef2f2;
   color: #dc2626;
@@ -1939,5 +1959,5 @@ textarea {
 }
 
 .status-badge.inactive {
-  background-color: gray;
+  background-color: rgb(185, 185, 185);
 }

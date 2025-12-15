@@ -267,12 +267,26 @@
                 </div>
 
                 <div class="info-item">
-                  <div class="info-icon"><i class="fas fa-calendar-times"></i></div>
+                  <div class="info-icon">
+                    <i class="fas fa-calendar-times"></i>
+                  </div>
+
                   <div class="info-content">
-                    <span class="info-label">Término</span>
-                    <span class="info-value">{{ assinaturaItem?.assinatura?.endDate | date:'dd/MM/yyyy' }}</span>
+                    <span class="info-label">
+                      Término
+                      <mat-icon class="info-tooltip"
+                        matTooltip="Após essa data, este item não aparecerá mais na listagem pública."
+                        matTooltipPosition="above">
+                        info
+                      </mat-icon>
+                    </span>
+
+                    <span class="info-value">
+                      {{ assinaturaItem?.banco?.data_expiracao | date:'dd/MM/yyyy' }}
+                    </span>
                   </div>
                 </div>
+
 
                 <div class="info-item">
                   <div class="info-icon"><i class="fas fa-sync-alt"></i></div>
@@ -477,10 +491,12 @@
                     <div class="cobranca-header">
                       <div class="cobranca-status-badge" [ngClass]="getStatus(c)">
                         <i class="fas" [ngClass]="{
-           'fa-check-circle': getStatus(c) === 'pago',
-           'fa-clock': getStatus(c) === 'pendente',
-           'fa-exclamation-triangle': getStatus(c) === 'vencido'
-         }"></i>
+  'fa-check-circle': getStatus(c) === 'pago',
+  'fa-clock': getStatus(c) === 'pendente' || getStatus(c) === 'estornado',
+
+  'fa-exclamation-triangle': getStatus(c) === 'vencido'
+}"></i>
+
 
                         <span>{{ getStatusLabel(c) }}</span>
 

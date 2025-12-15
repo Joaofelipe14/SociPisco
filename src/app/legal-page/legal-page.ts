@@ -602,12 +602,13 @@ COMO EXERCER SEUS DIREITOS:
    - Plataforma: seção "Privacidade e Dados" nas configurações
    - Prazo de resposta: até 15 dias corridos
 
-10. DIREITOS ESPECÍFICOS DE MENORES
+10. DIREITOS DE CRIANÇAS E ADOLESCENTES
 
-10.1. A Plataforma é destinada a maiores de 18 anos.
-10.2. Menores entre 16-18 anos podem usar mediante autorização dos responsáveis legais.
-10.3. NÃO coletamos intencionalmente dados de menores de 16 anos.
-10.4. Pais/responsáveis podem solicitar exclusão de dados de menores.
+10.1. A Plataforma é destinada prioritariamente a pessoas maiores de idade (18 anos ou mais).
+10.2. O uso da Plataforma por adolescentes entre 12 e 18 anos incompletos poderá ocorrer mediante consentimento e responsabilidade dos pais ou responsáveis legais.
+10.3. O SociPsi não realiza, de forma intencional, a coleta de dados pessoais de crianças menores de 12 anos.
+10.4. Pais ou responsáveis legais poderão, a qualquer momento, solicitar informações, correção ou exclusão dos dados pessoais de crianças e adolescentes.
+
 
 11. TRANSFERÊNCIA INTERNACIONAL DE DADOS
 
@@ -746,10 +747,10 @@ Canal: socipsi1@gmail.com
 
 9. TRATAMENTO DE DADOS DE CRIANÇAS E ADOLESCENTES
 
-9.1. Plataforma para maiores de 18 anos.
-9.2. Entre 16-18: mediante autorização dos responsáveis.
-9.3. Menores de 16: NÃO permitido uso.
-9.4. Coleta acidental: eliminação imediata após notificação.
+9.1. A Plataforma é destinada prioritariamente a pessoas maiores de idade (18 anos ou mais).
+9.2. O uso da Plataforma por adolescentes entre 12 e 18 anos incompletos poderá ocorrer mediante consentimento e responsabilidade dos pais ou responsáveis legais.
+9.3. O SociPsi não permite, de forma intencional, o uso da Plataforma por crianças menores de 12 anos, nem realiza a coleta de seus dados pessoais.
+9.4. Caso seja identificada coleta acidental de dados pessoais de crianças ou adolescentes, o SociPsi realizará a eliminação imediata dos dados, após a devida notificação.
 
 10. ENCARREGADO DE PROTEÇÃO DE DADOS (DPO)
 

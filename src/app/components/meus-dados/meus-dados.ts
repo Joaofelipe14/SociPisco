@@ -13,10 +13,13 @@ import { ordem } from '../../services/ordem';
 import { ConfirmAssinaturaDialog } from '../../confirm-assinatura-dialog/confirm-assinatura-dialog';
 import { RouterModule } from '@angular/router';
 import { gerarSlug } from '../../utils/slug'
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
+
 @Component({
   selector: 'app-meus-dados',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, Loading, RouterModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, Loading, RouterModule, MatTooltipModule, MatIconModule],
   templateUrl: './meus-dados.html',
   styleUrls: ['./meus-dados.css'],
 })
@@ -663,11 +666,11 @@ export class MeusDadosComponent implements OnInit {
               return dateA - dateB;
             });
 
-          
+
             // 3 – Inverte apenas a ordem visual
             cobrancasOrdenadas.reverse();
 
-              // 2 – Gera numeração correta
+            // 2 – Gera numeração correta
             cobrancasOrdenadas.forEach((c, index) => {
               if (!c.installmentNumber) c.installmentNumber = index + 1;
               c.totalInstallments = cobrancasOrdenadas.length;
@@ -811,13 +814,18 @@ export class MeusDadosComponent implements OnInit {
     const today = this.today;
     if (c?.status === 'RECEIVED' || c?.status == "CONFIRMED") return 'pago';
     if (c?.status === 'OVERDUE') return 'vencido';
+    if (c?.status === 'REFUNDED') return 'estornado';
+
     if (c?.status === 'PENDING' && c?.dueDate && c?.dueDate < today) return 'vencido';
     return 'pendente';
   }
   getStatusLabel(c: any) {
     const s = this.getStatus(c);
+    console.log('Status da cobrança:', s);
     if (s === 'pago') return 'Pago';
     if (s === 'vencido') return 'Vencido';
+    if (s === 'estornado') return 'Estornado';
+
     return 'Pendente';
   }
 
