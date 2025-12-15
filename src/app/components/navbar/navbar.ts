@@ -25,12 +25,7 @@ export class NavbarComponent implements OnInit {
     // Verifica se estamos no navegador (para evitar erros no SSR ou durante o SSR)
     this.isBrowser = isPlatformBrowser(this.platformId);
 
-    // Escuta as mudanças de rota e rola para o topo
-    this.router.events.subscribe(e => {
-      if (e instanceof NavigationEnd && this.isBrowser) {
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // Rolagem suave
-      }
-    });
+    // O scroll é gerenciado centralmente no app.ts
   }
 
   ngOnInit() {
