@@ -21,6 +21,10 @@ declare var gtag: Function;
 export class ListaPsicologos implements OnInit {
   psicologos$!: Observable<any[]>;
   psicologosFiltrados$!: Observable<any[]>;
+  psicologosExibidos: any[] = [];
+  psicologosFiltrados: any[] = [];
+  itemsPorPagina = 10;
+  itemsExibidos = 10;
   searchTerm = '';
   viewMode: 'card' | 'list' = 'card';
   faWhatsapp = faWhatsapp;
@@ -108,9 +112,30 @@ export class ListaPsicologos implements OnInit {
           });
         }
 
+        // Armazenar lista filtrada e resetar paginação
+        this.psicologosFiltrados = filtrados;
+        this.itemsExibidos = this.itemsPorPagina;
+        this.atualizarPsicologosExibidos();
+
         return filtrados;
       })
     );
+  }
+
+  atualizarPsicologosExibidos() {
+    this.psicologosExibidos = this.psicologosFiltrados.slice(0, this.itemsExibidos);
+  }
+
+  carregarMais() {
+    this.itemsExibidos += this.itemsPorPagina;
+    this.atualizarPsicologosExibidos();
+    gtag('event', 'carregar_mais_psicologos', {
+      items_exibidos: this.itemsExibidos
+    });
+  }
+
+  get temMaisParaCarregar(): boolean {
+    return this.itemsExibidos < this.psicologosFiltrados.length;
   }
 
   onSearchChange() {

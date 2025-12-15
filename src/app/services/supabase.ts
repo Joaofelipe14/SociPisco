@@ -64,6 +64,17 @@ export class SupabaseService {
     return data;
   }
 
+  async buscarPsicologosPaginado(limit: number = 10, offset: number = 0) {
+    const { data, error } = await this.supabase
+      .from('psicologos_ativos')
+      .select('*')
+      .order('criado_em', { ascending: false })
+      .range(offset, offset + limit - 1);
+
+    if (error) throw error;
+    return data;
+  }
+
   async buscarPsicologoPorId(id: string) {
     const { data, error } = await this.supabase
       .from('psicologos_ativos')

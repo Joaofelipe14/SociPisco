@@ -149,15 +149,15 @@
     </div>
   </div>
 
-  <div *ngIf="psicologosFiltrados$ | async as psicologos" class="content-container">
-    <div *ngIf="psicologos.length === 0" class="empty-state">
+  <div *ngIf="psicologosFiltrados$ | async" class="content-container">
+    <div *ngIf="psicologosFiltrados.length === 0" class="empty-state">
       <p>Nenhum psicólogo encontrado.</p>
     </div>
 
     <!-- Modo Card -->
     <div class="psicologos-list" [class.card-view]="viewMode === 'card'" [class.list-view]="viewMode === 'list'"
-      *ngIf="psicologos.length > 0">
-      <div class="psicologo-card" *ngFor="let p of psicologos" [class.card-mode]="viewMode === 'card'"
+      *ngIf="psicologosFiltrados.length > 0">
+      <div class="psicologo-card" *ngFor="let p of psicologosExibidos" [class.card-mode]="viewMode === 'card'"
         [class.list-mode]="viewMode === 'list'">
         <div class="card-content" (click)="verDetalhes(p)" style="cursor: pointer;">
           <img [src]="getAvatarUrl(p)" alt="{{ p.nome }}" class="profile-image" />
@@ -192,6 +192,16 @@
           Falar no WhatsApp
         </button>
       </div>
+    </div>
+
+    <!-- Botão Ver Mais -->
+    <div class="ver-mais-container" *ngIf="temMaisParaCarregar && psicologosFiltrados.length > 0">
+      <button class="ver-mais-btn" (click)="carregarMais()">
+        <span>Ver mais</span>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   </div>
 </div>

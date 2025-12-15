@@ -784,6 +784,75 @@
   box-shadow: none;
 }
 
+.ver-mais-container {
+  max-width: 1200px;
+  margin: 2.5rem auto 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.ver-mais-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.25);
+  min-width: 160px;
+}
+
+.ver-mais-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.5s, height 0.5s;
+}
+
+.ver-mais-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.ver-mais-btn:hover {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(20, 184, 166, 0.35);
+}
+
+.ver-mais-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.25);
+}
+
+.ver-mais-btn svg {
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.ver-mais-btn:hover svg {
+  transform: rotate(90deg);
+}
+
 @media (max-width: 768px) {
   .header-controls {
     flex-direction: column;
@@ -862,6 +931,17 @@
 }
 
 @media (max-width: 480px) {
+  .ver-mais-btn {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+    min-width: 140px;
+  }
+
+  .ver-mais-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
   .lista-container {
     padding: 1rem 0.75rem;
     padding-top: calc(var(--navbar-height, 60px) + 1rem);
