@@ -9,10 +9,13 @@ import { MeusDadosComponent } from './components/meus-dados/meus-dados';
 import { Login } from './components/admin/login/login';
 import { AdminPsicologos } from './components/admin/psicologos/psicologos';
 import { LegalPageComponent } from './legal-page/legal-page';
+import { ForgotPasswordComponent } from './forgot-password-component/forgot-password-component';
 
 export const routes: Routes = [
   { path: '', component: WelcomeComponent, data: { title: 'SociPsi | Bem-vindo' } },
   { path: 'login', component: LoginComponent, data: { title: 'SociPsi | Login' } },
+  { path: 'esqueci-senha', component: ForgotPasswordComponent, data: { title: 'SociPsi | Esqueci Senha' } },
+
   { path: 'cadastro-psicologo', component: CadastroPsicologoComponent, data: { title: 'SociPsi | Cadastro Psicólogo' } },
   { path: 'psicologos', component: ListaPsicologos, data: { title: 'SociPsi | Psicólogos' } },
   { path: 'psicologo/:id', component: DetalhesPsicologoComponent, data: { title: 'SociPsi | Detalhes do Psicólogo' } },

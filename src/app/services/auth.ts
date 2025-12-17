@@ -123,4 +123,28 @@ export class AuthService {
     );
   }
 
+  forgotPassword(email: string) {
+    return this.http.post<any>(
+      `${this.baseUrl}/forgot-password`,
+      { email },
+      { headers: this.getHeaders() }
+    );
+  }
+
+  verifyCode(email: string, code: string) {
+    return this.http.post<any>(
+      `${this.baseUrl}/verify-code`,
+      { email, code },
+      { headers: this.getHeaders() }
+    );
+  }
+
+  resetPassword(reset_token: string, novaSenha: string) {
+    return this.http.post<any>(
+      `${this.baseUrl}/reset-password`,
+      { reset_token, novaSenha },
+      { headers: this.getHeaders() }
+    );
+  }
+
 }
