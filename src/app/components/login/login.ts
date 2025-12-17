@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth';
 import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { FotoObrigatoriaModalComponent } from '../../foto-obrigatoria-modal/foto-obrigatoria-modal';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +24,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
-    private auth: AuthService
+    private auth: AuthService,
+    private dialog: MatDialog
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -53,6 +56,8 @@ export class LoginComponent implements OnInit {
         console.log('Login SUCCESS:', res);
         if (res.success) {
           this.router.navigate(['/meus-dados']);
+          // Verifica se o psicólogo tem foto após o login
+          this.verificarFotoPerfil();
         }
         this.loading = false;
       },
@@ -86,5 +91,22 @@ export class LoginComponent implements OnInit {
   setTipoUsuario(tipo: 'paciente' | 'psicologo') {
     this.tipoUsuario = tipo;
     this.errorMessage = '';
+  }
+
+  verificarFotoPerfil() {
+    this.auth.me().subscribe({
+      next: (res) => {
+        if (!res.user?.foto_url) {
+          setTimeout(() => {
+            this.dialog.open(FotoObrigatoriaModalComponent, {
+              width: '90%',
+              maxWidth: '550px',
+              maxHeight: '90vh',
+              disableClose: false
+            });
+          }, 500);
+        }
+      }
+    });
   }
 }
