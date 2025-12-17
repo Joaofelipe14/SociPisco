@@ -1,0 +1,78 @@
+<div class="foto-modal-container">
+  <div class="modal-header">
+    <div class="icon-warning">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+    </div>
+    <h2>Foto de Perfil Obrigatória</h2>
+  </div>
+
+  <div class="modal-body">
+    <p class="intro-text">
+      Identificamos que seu perfil ainda não possui uma foto. A foto de perfil é essencial para sua atuação na plataforma.
+    </p>
+
+    <div class="motivos-lista">
+      <div class="motivo-item">
+        <div class="motivo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </div>
+        <div class="motivo-content">
+          <h4>Segurança para o Paciente</h4>
+          <p>Pacientes se sentem mais seguros ao identificar visualmente o profissional antes de agendar uma consulta.</p>
+        </div>
+      </div>
+
+      <div class="motivo-item">
+        <div class="motivo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+        <div class="motivo-content">
+          <h4>Maior Credibilidade</h4>
+          <p>Perfis com foto transmitem mais profissionalismo e confiança, aumentando suas chances de ser escolhido.</p>
+        </div>
+      </div>
+
+      <div class="motivo-item">
+        <div class="motivo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <div class="motivo-content">
+          <h4>Conexão Humanizada</h4>
+          <p>A foto ajuda a criar um primeiro vínculo com o paciente, tornando o contato inicial mais acolhedor.</p>
+        </div>
+      </div>
+
+      <div class="motivo-item">
+        <div class="motivo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        <div class="motivo-content">
+          <h4>Melhor Visibilidade</h4>
+          <p>Perfis com foto aparecem com destaque nas buscas e têm mais visualizações dos pacientes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn-secondary" (click)="fechar()">Fazer Depois</button>
+    <button class="btn-primary" (click)="irParaMeusDados()">Adicionar Foto Agora</button>
+  </div>
+</div>
