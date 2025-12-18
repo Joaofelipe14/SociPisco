@@ -154,13 +154,20 @@ export class ListaPsicologos implements OnInit {
   }
 
   abrirWhatsApp(whatsapp: string) {
-    if (whatsapp) {
-      const numero = whatsapp.replace(/\D/g, '');
-      const texto = encodeURIComponent('Olá, vim pela Socipsi e queria verificar disponibilidade de agendamento de horário.');
-      const url = `https://wa.me/${numero}?text=${texto}`;
-      window.open(url, '_blank');
+    if (!whatsapp) return
+
+    let numero = whatsapp.replace(/\D/g, '')
+
+    // adiciona DDI do Brasil se faltar
+    if (numero.length === 11 && !numero.startsWith('55')) {
+      numero = '55' + numero
     }
+
+    const texto = encodeURIComponent('Olá, vim pela Socipsi e queria verificar disponibilidade de agendamento de horário.')
+    const url = `https://wa.me/${numero}?text=${texto}`
+    window.open(url, '_blank')
   }
+
 
   parseJson(value: any): any {
     if (typeof value === 'string') {

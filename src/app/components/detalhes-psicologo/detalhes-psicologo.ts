@@ -68,14 +68,21 @@ export class DetalhesPsicologoComponent implements OnInit {
   }
 
   abrirWhatsApp() {
-    if (this.psicologo?.whatsapp) {
-      const whatsapp = this.psicologo.whatsapp;
-      const numero = whatsapp.replace(/\D/g, '');
-      const texto = encodeURIComponent('Olá, vim pela Socipsi e queria verificar disponibilidade de agendamento de horário.');
-      const url = `https://wa.me/${numero}?text=${texto}`;
-      window.open(url, '_blank');
+    if (!this.psicologo?.whatsapp) return
+
+    let numero = this.psicologo.whatsapp.replace(/\D/g, '')
+
+    // adiciona DDI do Brasil se não tiver
+    if (numero.length === 11 && !numero.startsWith('55')) {
+      numero = '55' + numero
     }
+
+    const texto = encodeURIComponent('Olá, vim pela Socipsi e queria verificar disponibilidade de agendamento de horário.')
+    const url = `https://wa.me/${numero}?text=${texto}`
+    console.log('Abrindo WhatsApp para o número:', numero)
+    window.open(url, '_blank')
   }
+
 
   voltar() {
     this.router.navigate(['/psicologos']);

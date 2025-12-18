@@ -86,37 +86,41 @@ export class SupabaseService {
     return data;
   }
 
-  async buscarPsicologoPorSlug(slug: string) {
-    // Primeiro, tenta buscar por ID (para manter compatibilidade com links antigos)
-    // Se o slug for um UUID, tenta buscar por ID
-    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    if (uuidRegex.test(slug)) {
-      try {
-        return await this.buscarPsicologoPorId(slug);
-      } catch {
-        // Se não encontrar por ID, continua para buscar por slug
-      }
-    }
+  extrairDadosDoSlug(slug: string): { nome: string; crp: string } | null {
+    if (!slug) return null
 
-    // Busca todos os psicólogos e filtra pelo slug
+    const idx = slug.toLowerCase().lastIndexOf('-crp-')
+    if (idx === -1) return null
+
+    const nomeSlug = slug.slice(0, idx)
+    const crpSlug = slug.slice(idx + 5)
+
+    const numeros = crpSlug.replace(/\D/g, '')
+    if (numeros.length < 3) return null
+
+    const uf = numeros.slice(0, 2)
+    const numero = numeros.slice(2)
+
+    return {
+      nome: nomeSlug.replace(/-/g, ' '),
+      crp: `${uf}/${numero}`
+    }
+  }
+
+  async buscarPsicologoPorSlug(slug: string) {
+    const dados = this.extrairDadosDoSlug(slug)
+    if (!dados) return null
+
     const { data, error } = await this.supabase
       .from('psicologos_ativos')
-      .select('*');
+      .select('*')
+      .eq('crp', dados.crp)
+      .single()
 
-    if (error) throw error;
-
-    // Encontra o psicólogo cujo slug corresponde
-    const psicologo = data?.find(p => {
-      const slugGerado = gerarSlug(p.nome || '', p.crp || '');
-      return slugGerado === slug;
-    });
-
-    if (!psicologo) {
-      throw new Error('Psicólogo não encontrado');
-    }
-
-    return psicologo;
+    if (error) throw error
+    return data
   }
+
 
   async uploadFotoPerfil(usuarioId: string, file: File) {
     const fileExt = file.name.split('.').pop();
