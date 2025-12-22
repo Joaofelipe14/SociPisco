@@ -12,7 +12,8 @@ import { FotoObrigatoriaModalComponent } from '../../foto-obrigatoria-modal/foto
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
-export class LoginComponent implements OnInit {
+export class 
+LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   errorMessage = '';

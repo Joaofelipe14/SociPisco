@@ -112,6 +112,9 @@ export class ListaPsicologos implements OnInit {
           });
         }
 
+        // Randomizar a ordem dos psicólogos de forma determinística (baseada na data)
+        filtrados = this.randomizarOrdem(filtrados);
+
         // Armazenar lista filtrada e resetar paginação
         this.psicologosFiltrados = filtrados;
         this.itemsExibidos = this.itemsPorPagina;
@@ -329,5 +332,58 @@ export class ListaPsicologos implements OnInit {
     if (!target.closest('.autocomplete-wrapper')) {
       this.closeAllDropdowns();
     }
+  }
+
+  /**
+   * Gera uma seed numérica baseada na data atual (YYYY-MM-DD)
+   * Isso garante que a ordem seja consistente durante o mesmo dia
+   * mas mude diariamente de forma automática
+   */
+  private gerarSeedDoDia(): number {
+    const hoje = new Date();
+    const dataString = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}-${String(hoje.getDate()).padStart(2, '0')}`;
+    
+    // Converte a string da data em um número hash simples
+    let hash = 0;
+    for (let i = 0; i < dataString.length; i++) {
+      const char = dataString.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // Convert to 32bit integer
+    }
+    return Math.abs(hash);
+  }
+
+  /**
+   * Gerador de números pseudoaleatórios determinístico (Linear Congruential Generator)
+   * Usa uma seed para garantir resultados reproduzíveis
+   */
+  private geradorAleatorio(seed: number): () => number {
+    let valorAtual = seed;
+    return () => {
+      valorAtual = (valorAtual * 1664525 + 1013904223) % Math.pow(2, 32);
+      return valorAtual / Math.pow(2, 32);
+    };
+  }
+
+  /**
+   * Randomiza a ordem de um array usando o algoritmo Fisher-Yates shuffle
+   * com uma seed baseada na data, garantindo ordem consistente durante o dia
+   * mas mudando diariamente
+   */
+  private randomizarOrdem<T>(array: T[]): T[] {
+    if (array.length <= 1) return array;
+
+    // Cria uma cópia do array para não modificar o original
+    const copia = [...array];
+    const seed = this.gerarSeedDoDia();
+    const random = this.geradorAleatorio(seed);
+
+    // Algoritmo Fisher-Yates shuffle
+    for (let i = copia.length - 1; i > 0; i--) {
+      const j = Math.floor(random() * (i + 1));
+      [copia[i], copia[j]] = [copia[j], copia[i]];
+    }
+
+    return copia;
   }
 }
