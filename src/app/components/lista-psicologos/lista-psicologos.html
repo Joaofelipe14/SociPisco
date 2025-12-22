@@ -44,9 +44,34 @@
   <!-- Filtros -->
   <div class="filtros-container">
     <div class="filtros-content">
-      <h3 class="filtros-title">Filtrar por:</h3>
+      <div class="filtros-header" (click)="toggleFiltros()">
+        <h3 class="filtros-title">Filtrar por:</h3>
+        <button type="button" class="filtros-toggle-btn" [class.expanded]="filtrosExpandidos" aria-label="Expandir/Colapsar filtros">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Chips de filtros ativos (sempre visíveis quando minimizado) -->
+      <div class="filtros-chips-summary" *ngIf="!filtrosExpandidos && temFiltrosAtivos">
+        <div class="selected-chips-summary">
+          <span *ngFor="let area of selectedAreas" class="chip">
+            {{ area }}
+            <button type="button" class="chip-remove" (click)="removeFilter('areas', area); $event.stopPropagation()">×</button>
+          </span>
+          <span *ngFor="let abordagem of selectedAbordagens" class="chip">
+            {{ abordagem }}
+            <button type="button" class="chip-remove" (click)="removeFilter('abordagens', abordagem); $event.stopPropagation()">×</button>
+          </span>
+          <span *ngFor="let publico of selectedPublicos" class="chip">
+            {{ publico }}
+            <button type="button" class="chip-remove" (click)="removeFilter('publicos', publico); $event.stopPropagation()">×</button>
+          </span>
+        </div>
+      </div>
       
-      <div class="filtros-grid">
+      <div class="filtros-grid" [class.expanded]="filtrosExpandidos">
         <!-- Filtro de Áreas -->
         <div class="filtro-group">
           <label class="filtro-label">Áreas de Atuação</label>
@@ -69,7 +94,7 @@
               </div>
             </div>
           </div>
-          <div class="selected-chips" *ngIf="selectedAreas.length > 0">
+          <div class="selected-chips" *ngIf="filtrosExpandidos && selectedAreas.length > 0">
             <span
               *ngFor="let area of selectedAreas"
               class="chip"
@@ -102,7 +127,7 @@
               </div>
             </div>
           </div>
-          <div class="selected-chips" *ngIf="selectedAbordagens.length > 0">
+          <div class="selected-chips" *ngIf="filtrosExpandidos && selectedAbordagens.length > 0">
             <span
               *ngFor="let abordagem of selectedAbordagens"
               class="chip"
@@ -135,7 +160,7 @@
               </div>
             </div>
           </div>
-          <div class="selected-chips" *ngIf="selectedPublicos.length > 0">
+          <div class="selected-chips" *ngIf="filtrosExpandidos && selectedPublicos.length > 0">
             <span
               *ngFor="let publico of selectedPublicos"
               class="chip"

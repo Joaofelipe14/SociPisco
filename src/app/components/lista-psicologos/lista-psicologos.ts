@@ -44,6 +44,7 @@ export class ListaPsicologos implements OnInit {
   showAreasDropdown = false;
   showAbordagensDropdown = false;
   showPublicosDropdown = false;
+  filtrosExpandidos = false;
 
   constructor(
     private supabaseService: SupabaseService,
@@ -282,6 +283,10 @@ export class ListaPsicologos implements OnInit {
         this.showPublicosDropdown = false;
       }
     }
+    // Expande os filtros automaticamente quando um novo filtro é adicionado
+    if (!this.filtrosExpandidos) {
+      this.filtrosExpandidos = true;
+    }
     this.aplicarFiltros();
   }
 
@@ -332,6 +337,16 @@ export class ListaPsicologos implements OnInit {
     if (!target.closest('.autocomplete-wrapper')) {
       this.closeAllDropdowns();
     }
+  }
+
+  toggleFiltros() {
+    this.filtrosExpandidos = !this.filtrosExpandidos;
+  }
+
+  get temFiltrosAtivos(): boolean {
+    return this.selectedAreas.length > 0 || 
+           this.selectedAbordagens.length > 0 || 
+           this.selectedPublicos.length > 0;
   }
 
   /**
