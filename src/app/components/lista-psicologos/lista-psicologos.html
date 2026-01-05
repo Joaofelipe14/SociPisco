@@ -212,7 +212,7 @@
             <p class="psicologo-price">R$ 30 </p>
           </div>
         </div>
-        <button class="whatsapp-btn" (click)="abrirWhatsApp(p.whatsapp); $event.stopPropagation()"
+        <button class="whatsapp-btn" (click)="abrirWhatsApp(p.whatsapp, p.name); $event.stopPropagation()"
           [disabled]="!p.whatsapp">
           Falar no WhatsApp
         </button>

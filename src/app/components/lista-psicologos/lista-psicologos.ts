@@ -157,20 +157,25 @@ export class ListaPsicologos implements OnInit {
     this.router.navigate(['/psicologo', slug]);
   }
 
-  abrirWhatsApp(whatsapp: string) {
+  abrirWhatsApp(whatsapp: string, nome: string) {
     if (!whatsapp) return
 
     let numero = whatsapp.replace(/\D/g, '')
 
-    // adiciona DDI do Brasil se faltar
     if (numero.length === 11 && !numero.startsWith('55')) {
       numero = '55' + numero
     }
+
+    gtag('event', 'click_whatsapp', {
+      pessoa_nome: nome,
+      numero_whatsapp: numero
+    });
 
     const texto = encodeURIComponent('Olá, vim pela Socipsi e queria verificar disponibilidade de agendamento de horário.')
     const url = `https://wa.me/${numero}?text=${texto}`
     window.open(url, '_blank')
   }
+
 
 
   parseJson(value: any): any {
@@ -344,9 +349,9 @@ export class ListaPsicologos implements OnInit {
   }
 
   get temFiltrosAtivos(): boolean {
-    return this.selectedAreas.length > 0 || 
-           this.selectedAbordagens.length > 0 || 
-           this.selectedPublicos.length > 0;
+    return this.selectedAreas.length > 0 ||
+      this.selectedAbordagens.length > 0 ||
+      this.selectedPublicos.length > 0;
   }
 
   /**
@@ -357,7 +362,7 @@ export class ListaPsicologos implements OnInit {
   private gerarSeedDoDia(): number {
     const hoje = new Date();
     const dataString = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}-${String(hoje.getDate()).padStart(2, '0')}`;
-    
+
     // Converte a string da data em um número hash simples
     let hash = 0;
     for (let i = 0; i < dataString.length; i++) {

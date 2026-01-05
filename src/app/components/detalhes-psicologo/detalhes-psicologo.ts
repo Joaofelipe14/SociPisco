@@ -66,20 +66,22 @@ export class DetalhesPsicologoComponent implements OnInit {
         });
     });
   }
-
   abrirWhatsApp() {
     if (!this.psicologo?.whatsapp) return
 
     let numero = this.psicologo.whatsapp.replace(/\D/g, '')
 
-    // adiciona DDI do Brasil se não tiver
     if (numero.length === 11 && !numero.startsWith('55')) {
       numero = '55' + numero
     }
 
+    gtag('event', 'click_whatsapp', {
+      pessoa_nome: this.psicologo.nome,
+      numero_whatsapp: numero
+    });
+
     const texto = encodeURIComponent('Olá, vim pela Socipsi e queria verificar disponibilidade de agendamento de horário.')
     const url = `https://wa.me/${numero}?text=${texto}`
-    console.log('Abrindo WhatsApp para o número:', numero)
     window.open(url, '_blank')
   }
 
