@@ -45,9 +45,9 @@
         </div>
       </div>
 
-      <div class="alert-box">
+      <div *ngIf="data.plano.dia_gratis && data.plano.dia_gratis > 0"class="alert-box">
         <i class="fas fa-exclamation-triangle"></i>
-        <p *ngIf="data.plano.dia_gratis && data.plano.dia_gratis > 0">
+        <p >
           Você terá {{ data.plano.dia_gratis }} dias grátis. A primeira cobrança será em {{
           getPrimeiraCobranca(data.plano.dia_gratis) | date:'dd/MM/yyyy' }}.
         </p>
