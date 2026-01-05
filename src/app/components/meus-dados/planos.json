@@ -11,7 +11,7 @@
     "parcelas": 1,
     "ativo": 1,
     "promocao": 1,
-    "dia_gratis": 10,
+    "dia_gratis": 0,
     "criado_em": "2025-11-28 15:00:54.992244+00",
     "descricao": "Plano mensal para psicólogos se cadastrarem e aparecerem no sistema, permitindo que pacientes encontrem seus perfis rapidamente."
   },
@@ -27,7 +27,7 @@
     "ativo": 1,
     "parcelas": 3,
     "promocao": 1,
-    "dia_gratis": 10,
+    "dia_gratis": 0,
     "criado_em": "2025-11-28 15:00:54.992244+00",
     "descricao": "Plano trimestral que permite aos psicólogos manter seu cadastro ativo, garantindo visibilidade contínua para pacientes e maior alcance."
   },
@@ -43,7 +43,7 @@
     "ativo": 1,
     "parcelas":12,
     "promocao": 1,
-    "dia_gratis": 10,
+    "dia_gratis": 0,
     "criado_em": "2025-11-28 15:00:54.992244+00",
     "descricao": "Plano anual que garante máxima exposição dos psicólogos cadastrados, facilitando que pacientes encontrem e agendem consultas durante todo o ano."
   }
